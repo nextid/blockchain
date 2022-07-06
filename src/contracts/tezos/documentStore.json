@@ -1,0 +1,168 @@
+[
+  {
+    "prim": "storage",
+    "args": [
+      {
+        "prim": "pair",
+        "args": [
+          {
+            "prim": "pair",
+            "args": [
+              { "prim": "big_map", "args": [ { "prim": "bytes" }, { "prim": "nat" } ], "annots": [ "%documentIssued" ] },
+              { "prim": "big_map", "args": [ { "prim": "bytes" }, { "prim": "nat" } ], "annots": [ "%documentRevoked" ] }
+            ]
+          },
+          {
+            "prim": "pair",
+            "args": [ { "prim": "big_map", "args": [ { "prim": "string" }, { "prim": "bytes" } ], "annots": [ "%metadata" ] }, { "prim": "address", "annots": [ "%owner" ] } ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "prim": "parameter",
+    "args": [
+      {
+        "prim": "or",
+        "args": [
+          { "prim": "or", "args": [ { "prim": "bytes", "annots": [ "%issue" ] }, { "prim": "unit", "annots": [ "%renounceOwnership" ] } ] },
+          { "prim": "or", "args": [ { "prim": "bytes", "annots": [ "%revoke" ] }, { "prim": "address", "annots": [ "%transferOwnership" ] } ] }
+        ]
+      }
+    ]
+  },
+  {
+    "prim": "code",
+    "args": [
+      [
+        { "prim": "UNPAIR" },
+        {
+          "prim": "IF_LEFT",
+          "args": [
+            [
+              {
+                "prim": "IF_LEFT",
+                "args": [
+                  [
+                    { "prim": "SWAP" },
+                    { "prim": "DUP" },
+                    { "prim": "DUG", "args": [ { "int": "2" } ] },
+                    { "prim": "GET", "args": [ { "int": "4" } ] },
+                    { "prim": "PACK" },
+                    { "prim": "SENDER" },
+                    { "prim": "PACK" },
+                    { "prim": "COMPARE" },
+                    { "prim": "EQ" },
+                    { "prim": "IF", "args": [ [], [ { "prim": "PUSH", "args": [ { "prim": "string" }, { "string": "Invalid Owner" } ] }, { "prim": "FAILWITH" } ] ] },
+                    { "prim": "PUSH", "args": [ { "prim": "bool" }, { "prim": "False" } ] },
+                    { "prim": "PACK" },
+                    { "prim": "DUP", "args": [ { "int": "3" } ] },
+                    { "prim": "CAR" },
+                    { "prim": "CAR" },
+                    { "prim": "DUP", "args": [ { "int": "3" } ] },
+                    { "prim": "MEM" },
+                    { "prim": "PACK" },
+                    { "prim": "COMPARE" },
+                    { "prim": "EQ" },
+                    {
+                      "prim": "IF",
+                      "args": [
+                        [],
+                        [
+                          { "prim": "PUSH", "args": [ { "prim": "string" }, { "string": "Error: Only hashes that have not been issued can be issued" } ] },
+                          { "prim": "FAILWITH" }
+                        ]
+                      ]
+                    },
+                    { "prim": "SWAP" },
+                    { "prim": "UNPAIR" },
+                    { "prim": "UNPAIR" },
+                    { "prim": "LEVEL" },
+                    { "prim": "SOME" },
+                    { "prim": "DIG", "args": [ { "int": "4" } ] },
+                    { "prim": "UPDATE" },
+                    { "prim": "PAIR" },
+                    { "prim": "PAIR" }
+                  ],
+                  [
+                    { "prim": "DROP" },
+                    { "prim": "DUP" },
+                    { "prim": "GET", "args": [ { "int": "4" } ] },
+                    { "prim": "PACK" },
+                    { "prim": "SENDER" },
+                    { "prim": "PACK" },
+                    { "prim": "COMPARE" },
+                    { "prim": "EQ" },
+                    { "prim": "IF", "args": [ [], [ { "prim": "PUSH", "args": [ { "prim": "string" }, { "string": "Invalid Owner" } ] }, { "prim": "FAILWITH" } ] ] },
+                    { "prim": "PUSH", "args": [ { "prim": "address" }, { "string": "tz1Ke2h7sDdakHJQh8WX4Z372du1KChsksyU" } ] },
+                    { "prim": "UPDATE", "args": [ { "int": "4" } ] }
+                  ]
+                ]
+              }
+            ],
+            [
+              {
+                "prim": "IF_LEFT",
+                "args": [
+                  [
+                    { "prim": "SWAP" },
+                    { "prim": "DUP" },
+                    { "prim": "DUG", "args": [ { "int": "2" } ] },
+                    { "prim": "GET", "args": [ { "int": "4" } ] },
+                    { "prim": "PACK" },
+                    { "prim": "SENDER" },
+                    { "prim": "PACK" },
+                    { "prim": "COMPARE" },
+                    { "prim": "EQ" },
+                    { "prim": "IF", "args": [ [], [ { "prim": "PUSH", "args": [ { "prim": "string" }, { "string": "Invalid Owner" } ] }, { "prim": "FAILWITH" } ] ] },
+                    { "prim": "PUSH", "args": [ { "prim": "bool" }, { "prim": "False" } ] },
+                    { "prim": "PACK" },
+                    { "prim": "DUP", "args": [ { "int": "3" } ] },
+                    { "prim": "CAR" },
+                    { "prim": "CDR" },
+                    { "prim": "DUP", "args": [ { "int": "3" } ] },
+                    { "prim": "MEM" },
+                    { "prim": "PACK" },
+                    { "prim": "COMPARE" },
+                    { "prim": "EQ" },
+                    {
+                      "prim": "IF",
+                      "args": [ [], [ { "prim": "PUSH", "args": [ { "prim": "string" }, { "string": "Error: Hash has been revoked previously" } ] }, { "prim": "FAILWITH" } ] ]
+                    },
+                    { "prim": "SWAP" },
+                    { "prim": "UNPAIR" },
+                    { "prim": "UNPAIR" },
+                    { "prim": "SWAP" },
+                    { "prim": "LEVEL" },
+                    { "prim": "SOME" },
+                    { "prim": "DIG", "args": [ { "int": "4" } ] },
+                    { "prim": "UPDATE" },
+                    { "prim": "SWAP" },
+                    { "prim": "PAIR" },
+                    { "prim": "PAIR" }
+                  ],
+                  [
+                    { "prim": "SWAP" },
+                    { "prim": "DUP" },
+                    { "prim": "DUG", "args": [ { "int": "2" } ] },
+                    { "prim": "GET", "args": [ { "int": "4" } ] },
+                    { "prim": "PACK" },
+                    { "prim": "SENDER" },
+                    { "prim": "PACK" },
+                    { "prim": "COMPARE" },
+                    { "prim": "EQ" },
+                    { "prim": "IF", "args": [ [], [ { "prim": "PUSH", "args": [ { "prim": "string" }, { "string": "Invalid Owner" } ] }, { "prim": "FAILWITH" } ] ] },
+                    { "prim": "UPDATE", "args": [ { "int": "4" } ] }
+                  ]
+                ]
+              }
+            ]
+          ]
+        },
+        { "prim": "NIL", "args": [ { "prim": "operation" } ] },
+        { "prim": "PAIR" }
+      ]
+    ]
+  }
+]
