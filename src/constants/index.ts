@@ -38,6 +38,11 @@ export enum MESSAGE {
 	GAS_PRICE_NOT_FOUND = 'gas price multiplier is not found, default value used',
 	GAS_LIMIT_NOT_FOUND = 'gas limit multiplier is not found, default value used',
 	BATCH_NOT_REVIEWED = 'the batch you are trying to issue has not been reviewd',
+	INVALID_CODE = 'code is not correct',
+	VALID_CODE = 'code is correct',
+	CODE_EXPIRED = 'code is expired',
+	CODE_NOT_EXPIRED = 'code is not expired',
+	EXIST_TOKEN = 'token is existed'
 }
 
 export enum JSONWEBTOKEN {
@@ -69,18 +74,39 @@ export enum USER_ACTION_TYPE {
 
 export enum BATCH_STATUS {
 	PROCESSING = 'processing',
+	TOKEN_PROCESSING = 'token processing',
 	NEW = 'new',
 	ISSUED = 'issued',
 	REVIEWED = 'reviewed',
-	REVOKED = 'revoked'
+	REVOKED = 'revoked',
+	EMAILED = 'emailed',
+	TOKENISED = 'tokenised',
+	INVITED = 'invited',
+	DELIVERED = 'delivered'
 }
 
+/**
+	new (certificate is unsigned)
+	issued (certificate is signed and anchored to blockchain)
+	revoked (revocation published to blockchain)
+	processing (timeout status or permanent error)
+	emailed (certificate notification has been sent)
+	tokenised (token data has been produced)
+	invited (token transfer invite has been sent)
+	delivered (token has been minted & transferred)
+ */
 export enum CERTIFICATION_STATUS {
 	PROCESSING = 'processing',
+	TOKEN_PROCESSING = 'token processing',
 	NEW = 'new',
 	READY = 'ready',
 	ISSUED = 'issued',
-	REVOKED = 'revoked'
+	REVOKED = 'revoked',
+	EMAILED = 'emailed',
+	TOKENISED = 'tokenised',
+	INVITED = 'invited',
+	DELIVERED = 'delivered',
+	FAIL_TOKENISED = 'fail tokenised'
 }
 
 export enum ORIENTATION_TYPE {
@@ -147,17 +173,18 @@ export enum ZIL_MAINNET {
 }
 
 export enum TEZOS_ITHACANET {
-	RPC = 'https://ithacanet.ecadinfra.com',
+	RPC = 'https://rpc.ghostnet.teztnets.xyz/',
 	PUBLIC_KEY = 'tz1U8KLnQ6iSsisss3bQxcEHLzCfy8cS51W3',
 	URL = 'https://bafybeig27fkx3douw43ice5jicekof5jquj7tjgodsopmyqvgcfe4llqui.ipfs.infura-ipfs.io',
+	TOKEN_URL = 'https://nextcert.mypinata.cloud/ipfs/QmWRxs4xo2fShHmg3RqVusbra9tM8tFUZbGgi5qmARzMWV',
 	DOCUMENT_STORE_CONTRACT = "KT1WNPY5vbMu3EeAj5yTvNBjjWMvFoW3XQvm"
 }
 
 export enum TEZOS_MAINNET {
-	RPC = 'https://mainnet.smartpy.io',
-	PUBLIC_KEY = '',
-	URL = '',
-	DOCUMENT_STORE_CONTRACT = ""
+	RPC = 'https://mainnet.api.tez.ie',
+	PUBLIC_KEY = 'tz1domubojGkHCxxX9VXnjvmXZkncFUKLviz',
+	URL = 'https://bafybeig27fkx3douw43ice5jicekof5jquj7tjgodsopmyqvgcfe4llqui.ipfs.infura-ipfs.io',
+	TOKEN_URL = 'https://nextcert.mypinata.cloud/ipfs/QmWRxs4xo2fShHmg3RqVusbra9tM8tFUZbGgi5qmARzMWV'
 }
 
 export const SCHEMA: any = {
